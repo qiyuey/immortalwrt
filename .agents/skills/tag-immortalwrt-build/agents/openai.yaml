@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tag ImmortalWrt Build"
+  short_description: "Create personal build tags from upstream"
+  default_prompt: "Use $tag-immortalwrt-build to create a personal ImmortalWrt build tag from the current FIX commit."
