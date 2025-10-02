@@ -885,6 +885,8 @@ sub update {
 		push @index_feeds, $name;
 	}
 	foreach my $name (@index_feeds) {
+		system("bash", "./scripts/apply-feed-patches.sh", $name) == 0
+			or return 1;
 		warn "Create index file './feeds/$name.index' \n";
 		update_index($name) == 0 or do {
 			warn "failed.\n";

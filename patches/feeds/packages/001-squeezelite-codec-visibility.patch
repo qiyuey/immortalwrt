@@ -1,0 +1,19 @@
+--- a/sound/squeezelite/Makefile
++++ b/sound/squeezelite/Makefile
+@@ -127,12 +127,15 @@
+ 			Vorbis codec support (Tremor (libvorbisidec))
+ 		    default n
+ 
++	endif
++
++		# Keep this outside the package guard: FFmpeg prerequisites are
++		# propagated back to the package through this option.
+ 		config SQUEEZELITE_WMA_ALAC
+ 		    bool "WMA/ALAC decode support"
+ 		    help
+ 			WMA and ALAC codec support
+ 		    default n
+-	endif
+ endef
+ 
+ define Package/squeezelite/description/default
