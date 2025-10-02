@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=intel-microcode
 PKG_VERSION:=20260227
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_SOURCE:=intel-microcode_3.$(PKG_VERSION).1.tar.xz
 PKG_SOURCE_URL:=@DEBIAN/pool/non-free-firmware/i/intel-microcode/
@@ -48,6 +48,11 @@ endef
 define Package/intel-microcode/install
 	$(INSTALL_DIR) $(1)/lib/firmware/intel-ucode
 	$(INSTALL_DATA) $(PKG_BUILD_DIR)/intel-ucode-ipkg/* $(1)/lib/firmware/intel-ucode
+	# The x86 image builder copies rootfs /boot files to the boot partition.
+	# Generate a standard uncompressed early CPIO using the validated bundle.
+	$(INSTALL_DIR) $(1)/boot
+	$(STAGING_DIR)/../host/bin/iucode_tool -q --overwrite \
+		--write-earlyfw=$(1)/boot/intel-ucode.img $(PKG_BUILD_DIR)/$(MICROCODE).bin
 endef
 
 $(eval $(call BuildPackage,intel-microcode))
